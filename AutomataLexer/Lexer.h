@@ -12,11 +12,11 @@
 
 namespace AutomataLexer
 {
-    class StateMachine
+    class Lexer
     {
         public:
 
-        StateMachine();
+        Lexer();
         void AddTransition(std::string FromState, std::initializer_list<TransitionInput> InputSet, std::string ToState);
         void AddTransition(std::string FromState, std::vector<TransitionInput> InputSet, std::string ToState);
         /// @brief Processes a text.

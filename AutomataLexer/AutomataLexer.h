@@ -1,5 +1,7 @@
 #pragma once
 
-#include "TransitionInput.h"
+#include "CharacterPosition.h"
+#include "Lexer.h"
+#include "Message.h"
 #include "Token.h"
-#include "StateMachine.h"
+#include "TransitionInput.h"
