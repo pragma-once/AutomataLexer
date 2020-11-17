@@ -55,6 +55,11 @@ namespace AutomataLexer
         return DataPtr->Read(Text, Index);
     }
 
+    int TransitionInput::GetLength()
+    {
+        return DataPtr->GetLength();
+    }
+
     TransitionInput::StringData::StringData(const std::string& Expectation) : Expectation(Expectation) {}
     TransitionInput::CharRangeData::CharRangeData(char Min, char Max) : Min(Min), Max(Max) {}
     TransitionInput::CharData::CharData(char Expectation) : Expectation(Expectation) {}
@@ -93,4 +98,8 @@ namespace AutomataLexer
             return Index + 1;
         return Index;
     }
+
+    int TransitionInput::StringData::GetLength() { return Expectation.length(); }
+    int TransitionInput::CharRangeData::GetLength() { return 1; }
+    int TransitionInput::CharData::GetLength() { return 1; }
 }

@@ -2,6 +2,7 @@
 
 #include <initializer_list>
 #include <map>
+#include <memory>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -17,8 +18,11 @@ namespace AutomataLexer
         public:
 
         Lexer();
+        /// The first FromState added will be the start state.
         void AddTransition(std::string FromState, std::initializer_list<TransitionInput> InputSet, std::string ToState);
+        /// The first FromState added will be the start state.
         void AddTransition(std::string FromState, std::vector<TransitionInput> InputSet, std::string ToState);
+        void MakeFinal(std::string State);
         /// @brief Processes a text.
         ///
         /// An easy way to use this function:
@@ -33,8 +37,18 @@ namespace AutomataLexer
 
         private:
 
-        std::map<std::string, std::vector<std::tuple<TransitionInput, std::string>>> States;
-        std::string * CurrentStateNamePtr;
-        std::vector<std::tuple<TransitionInput, std::string>> * CurrentStatePtr;
+        class StateInfo
+        {
+            public:
+
+            bool IsFinal;
+            std::vector<std::tuple<TransitionInput, std::shared_ptr<std::string>>> Transitions;
+
+            StateInfo();
+        };
+
+        std::map<std::string, StateInfo> States;
+        std::string StartStateName;
+        std::map<std::string, std::shared_ptr<std::string>> StringPointers;
     };
 }

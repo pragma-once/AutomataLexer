@@ -18,6 +18,7 @@ namespace AutomataLexer
         /// @brief Reads the string from the given index and returns the new index if satisfied,
         ///        else returns the given index.
         int Read(const std::string&, int);
+        int GetLength();
 
         private:
 
@@ -27,6 +28,7 @@ namespace AutomataLexer
             virtual ~Data() = default;
             virtual Data * Clone() = 0;
             virtual int Read(const std::string&, int) = 0;
+            virtual int GetLength() = 0;
         };
         class StringData : public Data
         {
@@ -34,6 +36,7 @@ namespace AutomataLexer
             StringData(const std::string&);
             virtual Data * Clone() override;
             virtual int Read(const std::string&, int) override;
+            virtual int GetLength() override;
             private:
             std::string Expectation;
         };
@@ -43,6 +46,7 @@ namespace AutomataLexer
             CharRangeData(char Min, char Max);
             virtual Data * Clone() override;
             virtual int Read(const std::string&, int) override;
+            virtual int GetLength() override;
             private:
             char Min, Max;
         };
@@ -52,6 +56,7 @@ namespace AutomataLexer
             CharData(char);
             virtual Data * Clone() override;
             virtual int Read(const std::string&, int) override;
+            virtual int GetLength() override;
             private:
             char Expectation;
         };
