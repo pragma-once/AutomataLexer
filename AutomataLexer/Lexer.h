@@ -5,10 +5,13 @@
 #include <memory>
 #include <string>
 #include <tuple>
+#include <variant>
 #include <vector>
 
 #include "Message.h"
+#include "MessageAction.h"
 #include "Token.h"
+#include "TokenReturnAction.h"
 #include "TransitionInput.h"
 
 namespace AutomataLexer
@@ -19,9 +22,17 @@ namespace AutomataLexer
 
         Lexer();
         /// The first FromState added will be the start state.
-        void AddTransition(std::string FromState, std::initializer_list<TransitionInput> InputSet, std::string ToState);
+        void AddTransition(std::string FromState,
+                           std::initializer_list<TransitionInput> InputSet,
+                           std::string ToState,
+                           std::initializer_list<std::variant<TokenReturnAction, MessageAction>> Actions
+                                = std::initializer_list<std::variant<TokenReturnAction, MessageAction>>());
         /// The first FromState added will be the start state.
-        void AddTransition(std::string FromState, std::vector<TransitionInput> InputSet, std::string ToState);
+        void AddTransition(std::string FromState,
+                           std::vector<TransitionInput> InputSet,
+                           std::string ToState,
+                           std::vector<std::variant<TokenReturnAction, MessageAction>> Actions
+                                = std::vector<std::variant<TokenReturnAction, MessageAction>>());
         void MakeFinal(std::string State);
         /// @brief Processes a text.
         ///
@@ -42,7 +53,11 @@ namespace AutomataLexer
             public:
 
             bool IsFinal;
-            std::vector<std::tuple<TransitionInput, std::shared_ptr<std::string>>> Transitions;
+            std::vector<std::tuple<
+                    TransitionInput,
+                    std::shared_ptr<std::string>,
+                    std::shared_ptr<std::vector<std::variant<TokenReturnAction, MessageAction>>>
+                >> Transitions;
 
             StateInfo();
         };

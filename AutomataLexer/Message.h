@@ -18,6 +18,6 @@ namespace AutomataLexer
         /// @brief The type of message, can be Error, Warning, or any string.
         std::string Type;
         /// @brief The actual message.
-        std::string Content;
+        std::string Text;
     };
 }
